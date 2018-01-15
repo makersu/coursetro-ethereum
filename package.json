@@ -1,0 +1,26 @@
+{
+  "name": "ethereum-courses",
+  "version": "1.0.0",
+  "description": "Developing Ethereum Smart Contracts for Beginners",
+  "main": "index.js",
+  "scripts": {
+    "dev": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makersu/ethereum-courses.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/makersu/ethereum-courses/issues"
+  },
+  "homepage": "https://github.com/makersu/ethereum-courses#readme",
+  "dependencies": {
+    "web3": "github:ethereum/web3.js"
+  },
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}
