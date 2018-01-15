@@ -42,9 +42,29 @@
             web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
         }
 
-        web3.eth.defaultAccount = web3.eth.accounts[0];
+        web3.eth.defaultAccount = web3.eth.accounts[0]; // try changing the defaultAccount to web3.eth.accounts[2]
+        console.log('web3.eth.defaultAccount');
+        console.log(web3.eth.defaultAccount);
 
         var CourseContract = web3.eth.contract([
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_fName",
+                            "type": "string"
+                        },
+                        {
+                            "name": "_age",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setInstructor",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
                 {
                     "constant": true,
                     "inputs": [],
@@ -64,6 +84,12 @@
                     "type": "function"
                 },
                 {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
                     "anonymous": false,
                     "inputs": [
                         {
@@ -79,31 +105,17 @@
                     ],
                     "name": "Instructor",
                     "type": "event"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_fName",
-                            "type": "string"
-                        },
-                        {
-                            "name": "_age",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "setInstructor",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
                 }
             ]);
 
-        var Course = CourseContract.at('0x5dd0ee4c8dab9723a56ef9c259a0fed1d6a1be9f');
+        var Course = CourseContract.at('0x825e4010256a9aa9bd06649d2ec538d44cff8a92');
+        console.log('Course');
         console.log(Course);
 
-        var instructorEvent = Course.Instructor();
+        // var instructorEvent = Course.Instructor();
+        var instructorEvent = Course.Instructor({}, 'latest');
+        console.log('instructorEvent');
+        console.log(instructorEvent);
 
         instructorEvent.watch(function (error, result) {
             if (!error) {
@@ -117,7 +129,17 @@
 
         $("#button").click(function () {
             $("#loader").show();
-            Course.setInstructor($("#name").val(), $("#age").val());
+            // Course.setInstructor($("#name").val(), $("#age").val());
+            Course.setInstructor($("#name").val(), $("#age").val(), (err, res) => {
+                if (err) {
+                    $("#loader").hide();
+                    console.log('oh no');
+                }
+                else{
+                    console.log('res');
+                    console.log(res);
+                }
+            });
         });
 
     </script>
